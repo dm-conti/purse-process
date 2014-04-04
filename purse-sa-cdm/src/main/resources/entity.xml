@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file contains the mapper configuration used by the Service Adapter to perform
+     a runtime translation from the canonical data model to the target service-specific model -->
+<service
+	xmlns="http://www.paybay.it/titan/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.paybay.it/titan/schema titan-service-definition.xsd">
+	<operation name="getEntityProfile">
+		<parameters>
+			<param keyIn="ENTITY_ID" keyOut="id" type="long"/>
+		</parameters>
+		<output>
+			<param keyIn="id" keyOut="ENTITY_ID" type="long"/>
+			<param keyIn="name" keyOut="ENTITY_NAME" type="string"/>
+		</output>
+	</operation>
+	<operation name="deleteEntityProfile">
+		<parameters>
+			<param keyIn="ENTITY_ID" keyOut="id" type="long"/>
+		</parameters>
+	</operation>
+	<operation name="createEntityProfile">
+		<payload>	
+			<param keyIn="ENTITY_NAME" keyOut="name" type="string"/>
+		</payload>
+		<output>
+			<param keyIn="id" keyOut="ENTITY_ID" type="long"/>
+			<param keyIn="name" keyOut="ENTITY_NAME" type="string"/>
+		</output>
+	</operation>
+	<operation name="updateEntityProfile">
+		<parameters>
+			<param keyIn="ENTITY_ID" keyOut="id" type="long"/>
+			<param keyIn="ENTITY_NAME" keyOut="name" type="string"/>
+		</parameters>
+		<output>
+			<param keyIn="id" keyOut="ENTITY_ID" type="long"/>
+			<param keyIn="name" keyOut="CUSTOMER_NAME" type="string"/>
+		</output>
+	</operation>
+</service>

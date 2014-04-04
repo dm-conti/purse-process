@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows
+END
+GetInfoTicketWorkflow.java
+K 25
+svn:wc:ra_dav:version-url
+V 186
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows/GetInfoTicketWorkflow.java
+END
+NewCustomerWorkflow.java
+K 25
+svn:wc:ra_dav:version-url
+V 184
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows/NewCustomerWorkflow.java
+END
+OrderTicketWorkflow.java
+K 25
+svn:wc:ra_dav:version-url
+V 184
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows/OrderTicketWorkflow.java
+END
+GetInfoCustomerWorkflow.java
+K 25
+svn:wc:ra_dav:version-url
+V 188
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows/GetInfoCustomerWorkflow.java
+END
+BuyTicketWorkflow.java
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/java/it/paybay/titan/workflows/BuyTicketWorkflow.java
+END

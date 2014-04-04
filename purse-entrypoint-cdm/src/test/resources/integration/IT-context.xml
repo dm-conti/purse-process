@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:cxf-core="http://cxf.apache.org/core"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:test.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<amq:broker id="my-broker" brokerName="testbroker" useShutdownHook="true" useJmx="false" persistent="false">
+		<amq:transportConnectors>
+			<amq:transportConnector name="tcp" uri="${broker.url}"/>
+		</amq:transportConnectors>
+	</amq:broker>
+	
+	<import resource="classpath*:META-INF/spring/activemq.xml"/>
+	<import resource="classpath*:META-INF/spring/cxf.xml"/>
+	
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+				<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					<property name="supportedMediaTypes" value="application/json"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="genericRoute" class="it.tmp.restentrypoint.pursecdm.route.GenericFacadeRoute"/>
+
+	<!-- Camel Context -->
+	<camel:camelContext autoStartup="true" id="restEntryPoint-context" useMDCLogging="true">
+		<camel:routeBuilder ref="genericRoute"/>
+	</camel:camelContext>
+</beans>

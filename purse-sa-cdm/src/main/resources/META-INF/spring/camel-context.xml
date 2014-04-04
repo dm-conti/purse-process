@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+	
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:configuration.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="canonicalMapper" class="it.tmp.businessprocess.pursecdm.converter.CanonicalMapper" init-method="init">
+		<property name="configurationFile" value="${serviceTranslator.configuration}" />
+	</bean>
+	
+	<!-- Camel Context -->
+	<camel:camelContext id="genericService-context" handleFault="true" useMDCLogging="true">
+		<camel:package>it.tmp.businessprocess.pursecdm.route</camel:package>
+	</camel:camelContext>
+</beans>

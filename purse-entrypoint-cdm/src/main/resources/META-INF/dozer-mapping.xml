@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+	<mapping  wildcard="false" map-null="false">
+		<class-a>it.tmp.restentrypoint.pursecdm.dto.CreatePurseDTO</class-a>
+		<class-b >it.paybay.titan.model.ExchangeAgreement</class-b>
+		<field>
+			<a>conversionFactors</a>
+			<b>conversionType.symbol</b>
+			<a-hint>java.util.Map</a-hint>
+		</field>
+		<field>
+			<a key="USD">conversionFactors</a>
+			<b>conversionType.factor</b>
+		</field>
+	</mapping>
+
+</mappings>

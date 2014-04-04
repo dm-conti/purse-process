@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextName>TitanRestfulEntrypoint</contextName>
+	<jmxConfigurator/>
+	
+	<property scope="context" name="LOG_DIR" value="target/logs"/>	
+	
+	<appender name="LOGGING_ROUTE" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>camel.routeId</key>
+            <defaultValue>unknownRoute</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${camel.routeId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${LOG_DIR}/${camel.routeId}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				   <fileNamePattern>${LOG_DIR}/${camel.routeId}-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+				   <maxHistory>30</maxHistory>
+				   <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				    	<maxFileSize>100MB</maxFileSize>
+				   </timeBasedFileNamingAndTriggeringPolicy>
+		 		 </rollingPolicy>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%d | %-5level | %thread | %logger{20} | %-10.10X{camel.exchangeId} | %msg%n%rEx</pattern>
+                </layout>
+            </appender>
+        </sift>
+    </appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d | %-5level | %thread | %logger{35} | %msg%n%rEx</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="LOGGING_ROUTE" />
+	</root>
+	
+</configuration>

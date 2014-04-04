@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<!-- Use the file properties for testing. -->
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:test.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Add the routes for integration testing.  -->
+	<camel:camelContext id="purse-bs-cdm-Context">
+		<camel:package>it.tmp.businessprocess.pursecdm</camel:package>
+	</camel:camelContext>
+	
+	<!-- This is the ActiveMQ broker configuration for starting an embedded/local broker.
+	     This configuration is provided as is by Archetype ONLY TO SHOW HOW AN INTEGRATION TEST WORKS. 
+	     When writing the REAL Integration Test, you need to remove this configuration, and properly
+	     modify the test.properties file so that it will point to the broker URL available in the
+	     test environment: in fact an integration test needs a real broker running in a test environment -->
+	<amq:broker id="my-broker" brokerName="testbroker" useShutdownHook="true" useJmx="false" persistent="false">
+		<amq:transportConnectors>
+			<amq:transportConnector name="tcp" uri="${broker.url}"/>
+		</amq:transportConnectors>
+	</amq:broker>
+
+	<import resource="classpath*:META-INF/spring/activemq.xml" />
+	
+</beans>

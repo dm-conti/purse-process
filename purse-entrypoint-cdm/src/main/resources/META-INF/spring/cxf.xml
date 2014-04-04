@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:cxf-core="http://cxf.apache.org/core"
+	xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+	xmlns:sec="http://cxf.apache.org/configuration/security"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/transports/http-jetty/configuration   
+       http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+       http://cxf.apache.org/configuration/security
+       http://cxf.apache.org/schemas/configuration/security.xsd">
+
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+	<bean id="cxfExceptionMapper" class="org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper">
+		<property name="printStackTrace" value="false" />
+	</bean>
+
+	<cxf:rsServer id="genericServer"
+		address="${protocol}://${rest.endpoint.addresses}:${rest.endpoint.port}/somethings"
+		serviceClass="it.tmp.restentrypoint.pursecdm.service.GenericFacadeService"
+		loggingFeatureEnabled="true">
+		<cxf:providers>
+			<ref bean="jsonProvider" />
+			<ref bean="cxfExceptionMapper" />
+		</cxf:providers>
+		<cxf:inInterceptors>
+			<!-- Add the interceptors needed for authentication and authorization -->
+			<ref bean="authenticationInterceptor" />
+			<ref bean="authorizationInterceptor" />
+		</cxf:inInterceptors>
+	</cxf:rsServer>
+	
+	<cxf:rsServer id="purseServer"
+		address="${protocol}://${rest.endpoint.addresses}:${rest.endpoint.port}/somethings/purses"
+		
+		serviceClass="it.tmp.restentrypoint.pursecdm.service.CreatePurseFacadeService"
+		loggingFeatureEnabled="true">
+		<cxf:providers>
+			<ref bean="jsonProvider" />
+			<ref bean="cxfExceptionMapper" />
+		</cxf:providers>
+		<cxf:inInterceptors>
+			<!-- Add the interceptors needed for authentication and authorization -->
+			<ref bean="authenticationInterceptor" />
+			<ref bean="authorizationInterceptor" />
+		</cxf:inInterceptors>
+	</cxf:rsServer>
+
+	<!-- Replay this bean with your authentication system as IAM -->
+	<bean id="authenticationInterceptor" class="it.tmp.restentrypoint.pursecdm.security.RestAuthenticationEntryPoint" />
+
+	<!-- Replay this bean with your authorization system as IAM -->
+	<bean id="authorizationInterceptor" class="it.tmp.restentrypoint.pursecdm.security.RestAuthorizationEntryPoint" />
+
+	<!-- The following configuration enables SSL -->
+	<!--
+		About the keystore configuration, you can select one of following solutions:
+	    	- use the attribute classpath when the keystore is under resources folder;
+	    	- use the attribute file when the keystore is in local file system;
+	    	- use the attribute url when the keystore is remote.
+	-->
+<!-- 	<httpj:engine-factory id="port-8443-tls-config"> -->
+<!-- 		<httpj:engine port="${rest.endpoint.port}"> -->
+<!-- 			<httpj:tlsServerParameters> -->
+				<!-- A key manager is the management of cryptographic keys in a cryptosystem. -->
+<!-- 				<sec:keyManagers keyPassword="${keyManagers.password}"> -->
+<!-- 					<sec:keyStore type="JKS" password="${keystore.password}" url="${keystore}" /> -->
+<!-- 				</sec:keyManagers> -->
+				<!-- 
+					TrustManager determines whether remote connection should be trusted or not i.e. whether remote party 
+					is who it claims to and KeyManager decides which authentication credentials should be sent to the remote 
+					host for authentication during SSL handshake.
+         		-->
+<!-- 				<sec:trustManagers> -->
+<!-- 					<sec:keyStore type="JKS" password="${truststore.password}" url="${truststore}" /> -->
+<!-- 				</sec:trustManagers> -->
+<!-- 			</httpj:tlsServerParameters> -->
+<!-- 		</httpj:engine> -->
+<!-- 	</httpj:engine-factory> -->
+	
+	<!-- Needed for building port-8443-tls-config bean -->
+	<!-- <import resource="classpath:META-INF/cxf/cxf.xml" /> -->
+
+</beans>      

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/resources/META-INF/spring
+END
+camel-context.xml
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/resources/META-INF/spring/camel-context.xml
+END
+activemq.xml
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/svn/!svn/ver/41218/projects/miur/warzone/titan-platform-ref-impl/tags/titan-platform-ref-impl-ver1.2.0/titan-workflows/src/main/resources/META-INF/spring/activemq.xml
+END
